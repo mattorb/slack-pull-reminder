@@ -1,8 +1,11 @@
 import os
 import sys
+import datetime
+import pytz
 
 import requests
 from github3 import login
+
 
 POST_URL = 'https://slack.com/api/chat.postMessage'
 
@@ -39,12 +42,22 @@ def is_valid_title(title):
 
     return True
 
+today = datetime.datetime.now(tz=pytz.utc)
+
+
+def is_valid_date(pull_date):
+    date_diff = today - pull_date
+    if date_diff.days > 1:
+        return True
+    else:
+        return False
+
 
 def format_pull_requests(pull_requests, owner, repository):
     lines = []
 
     for pull in pull_requests:
-        if is_valid_title(pull.title):
+        if is_valid_title(pull.title) and is_valid_date(pull.created_at):
             creator = pull.user.login
             line = '*[{0}/{1}]* <{2}|{3} - by {4}>'.format(
                 owner, repository, pull.html_url, pull.title, creator)
@@ -63,7 +76,6 @@ def fetch_organization_pulls(organization_name):
 
     for repository in organization.repositories():
         if repository.name in REPO_LIST:
-            print(repository.name)
             unchecked_pulls = fetch_repository_pulls(repository)
             lines += format_pull_requests(unchecked_pulls, organization_name, repository.name)
 
