@@ -53,6 +53,25 @@ Example that runs slack-pull-reminder every day at 10:00:
 
     0 10 * * * ORGANIZATION="orgname" SLACK_API_TOKEN="token" GITHUB_API_TOKEN="token" slack-pull-reminder
 
+Docker
+~~~~~~
+
+Build
+
+.. code:: bash
+
+    docker build --tag company/slack-pull-reminder
+
+Run
+
+.. code:: bash
+
+    docker run -d -e 'ORGRANIZATION=orgname' \
+                  -e 'REPOS=repo1,repo2' \
+                  -e SLACK_API_TOKEN="" \
+                  -e GITHUB_API_TOKEN="token" \
+                  company/slack-pull-reminder
+
 License
 -------
 
