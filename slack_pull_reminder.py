@@ -10,8 +10,8 @@ from github3 import login
 POST_URL = 'https://slack.com/api/chat.postMessage'
 
 ignore = os.environ.get('IGNORE_WORDS')
-IGNORE_WORDS = ignore.split(',') if ignore else []
-SLACK_CHANNEL = os.environ.get('SLACK_CHANNEL', '@shimon')
+IGNORE_WORDS = ignore.split(',') if ignore else ['WIP']
+SLACK_CHANNEL = os.environ.get('SLACK_CHANNEL', '#general')
 REPO_LIST = os.environ.get('REPOS').split(',')
 try:
     SLACK_API_TOKEN = os.environ['SLACK_API_TOKEN']
