@@ -12,11 +12,13 @@ POST_URL = 'https://slack.com/api/chat.postMessage'
 ignore = os.environ.get('IGNORE_WORDS')
 IGNORE_WORDS = ignore.split(',') if ignore else ['WIP']
 SLACK_CHANNEL = os.environ.get('SLACK_CHANNEL', '#general')
-REPO_LIST = os.environ.get('REPOS').split(',')
+DRY_RUN = os.environ.get('DRY_RUN', false)
+
 try:
     SLACK_API_TOKEN = os.environ['SLACK_API_TOKEN']
     GITHUB_API_TOKEN = os.environ['GITHUB_API_TOKEN']
     ORGANIZATION = os.environ['ORGANIZATION']
+    REPO_LIST = os.environ.get('REPOS').split(',')
 
 except KeyError as error:
     sys.stderr.write('Please set the environment variable {0}'.format(error))
@@ -90,6 +92,10 @@ def send_to_slack(text):
         'icon_emoji': ':bell:',
         'text': text
     }
+
+    if DRY_RUN:
+        print payload
+        return
 
     response = requests.post(POST_URL, data=payload)
     answer = response.json()

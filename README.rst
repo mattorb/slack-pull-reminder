@@ -34,6 +34,8 @@ Optional
    pull request to be ignored.
 -  ``SLACK_CHANNEL``: The Slack channel you want the reminders to be
    posted in, defaults to #general.
+- ``DRY_RUN``: stdout json rather than post to slack, defaults to false.
+- ``CRON_EXPR``: Cron expression for the schedule to run on, defaults to '0 10 * * *'
 
 Example
 ~~~~~~~
