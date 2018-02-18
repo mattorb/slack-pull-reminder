@@ -1,5 +1,5 @@
 #!/bin/bash
-printenv | grep -v no_proxy | sed 's/^\(.*\)$/export \1/g' >> /root/project_env.sh
+printenv | grep -v CRON_EXPR | grep -v no_proxy | sed 's/^\(.*\)$/export \1/g' >> /root/project_env.sh
 chmod +x /root/project_env.sh
 
 if [[ -z $CRON_EXPR ]]; then
@@ -11,7 +11,7 @@ echo Setting Schedule to $CRON_EXPR
 set +f
 
 cat << EOF > /etc/cron.d/hello-cron
-$CRON_EXPR root . /root/project_env.sh; slack-pull-reminder >> /var/log/cron.log 2>&1
+$CRON_EXPR root . /root/project_env.sh; python /root/slack_pull_reminder.py >> /var/log/cron.log 2>&1
 # An empty line is required at the end of this file for a valid cron file.
 
 EOF

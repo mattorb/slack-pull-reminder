@@ -12,7 +12,7 @@ POST_URL = 'https://slack.com/api/chat.postMessage'
 ignore = os.environ.get('IGNORE_WORDS')
 IGNORE_WORDS = ignore.split(',') if ignore else ['WIP']
 SLACK_CHANNEL = os.environ.get('SLACK_CHANNEL', '#general')
-DRY_RUN = os.environ.get('DRY_RUN', false)
+DRY_RUN = os.environ.get('DRY_RUN', False)
 
 try:
     SLACK_API_TOKEN = os.environ['SLACK_API_TOKEN']
@@ -104,6 +104,9 @@ def send_to_slack(text):
 
 
 def cli():
+    if DRY_RUN:
+        print 'Checking $ORGANIZATION for PRs.  Dry run mode'
+
     lines = fetch_organization_pulls(ORGANIZATION)
     if lines:
         text = INITIAL_MESSAGE + '\n'.join(lines)
