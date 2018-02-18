@@ -25,6 +25,7 @@ Required
 -  ``GITHUB_API_TOKEN``
 -  ``ORGANIZATION``: The GitHub organization you want pull request
    reminders for.
+- ``REPOS``: comma seperated list of repo's to notify for
 
 Optional
 ~~~~~~~~
@@ -39,7 +40,7 @@ Example
 
 .. code:: bash
 
-    $ ORGANIZATION="orgname" SLACK_API_TOKEN="token" GITHUB_API_TOKEN="token" slack-pull-reminder
+    $ ORGANIZATION="orgname" SLACK_API_TOKEN="token" GITHUB_API_TOKEN="token" REPOS="App1,App2" slack-pull-reminder
 
 Cronjob
 ~~~~~~~
