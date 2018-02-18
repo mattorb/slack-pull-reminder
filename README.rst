@@ -61,7 +61,7 @@ Build
 
 .. code:: bash
 
-    docker build --tag company/slack-pull-reminder
+    docker build --tag company/slack-pull-reminder .
 
 Run
 
