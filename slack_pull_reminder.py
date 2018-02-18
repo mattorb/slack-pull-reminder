@@ -45,7 +45,7 @@ def is_valid_title(title):
 today = datetime.datetime.now(tz=pytz.utc)
 
 
-def is_valid_date(pull_date):
+def is_old_enough(pull_date):
     date_diff = today - pull_date
     if date_diff.days > 1:
         return True
@@ -57,7 +57,7 @@ def format_pull_requests(pull_requests, owner, repository):
     lines = []
 
     for pull in pull_requests:
-        if is_valid_title(pull.title) and is_valid_date(pull.created_at):
+        if is_valid_title(pull.title) and is_old_enough(pull.created_at):
             creator = pull.user.login
             line = '*[{0}/{1}]* <{2}|{3} - by {4}>'.format(
                 owner, repository, pull.html_url, pull.title, creator)
